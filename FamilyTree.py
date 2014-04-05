@@ -1,10 +1,15 @@
 from Person import Person
+import pickle
 
 class FamilyTree:
   def __init__(self):
     self.adjList = dict()
     self.rootParent = None
 
+  """
+    Given a person, this method returns the parent, if its a root of the familyTree returns None
+
+  """
   def findParent(self,person):
     for parent, children in self.adjList.iteritems():
       for child in children:
@@ -12,6 +17,9 @@ class FamilyTree:
           return parent
     return None
 
+  """
+    Returns the grandParent of the person or None if the grandParent is not present
+  """
   def getGrandParentNode(self,person):
     if person in self.adjList:
       parent = self.findParent(person)
@@ -21,41 +29,44 @@ class FamilyTree:
       else:
         return None
 
+  """
+    Adds a person to a family Tree
+  """
   def addPerson(self,person):
    if person not in self.adjList:
       self.adjList[person] = []
    else:
      print str(person)+ " already present"
  
+  """
+    Sets a person as a root of the familyTree
+  """
   def setRootParent(self,person):
-    if person is not None:
+    if person is not None and person in self.adjList:
       self.rootParent = person
 
+  """
+    Connects two persons. If the second person is connected to another parent, removes the connection and connects with a first person
+  """
   def connectPersons(self,personA,personB):
     if personA == personB:
       print "Same Person"
       return
     if personA in self.adjList and personB in self.adjList:
-
        parent = self.findParent(personB)
        if parent is not None:
          children = self.adjList[parent]
          children.remove(personB)
-
        vals = self.adjList[personA]
        if personB not in vals:
           vals.append(personB)
     else:
        print "Add " + str(personA)
 
-  def removePersonAndChildren(self,person):
-      if person in self.adjList:
-        children = self.adjList[person]
-        self.removePerson(person)
-        for child in children:
-          self.removeParentAndChildren(child)
-      
-  def removePerson(self,person):
+  """
+    Private Method. Removes a person from the Tree
+  """
+  def __removePerson(self,person):
     if person in self.adjList:
       parent = self.findParent(person)
       if parent is not None:
@@ -63,17 +74,35 @@ class FamilyTree:
         children.remove(person)
       del self.adjList[person]
 
-  def printTreeHelperFunction(self,person,spaces):
+  """
+    Recursively removes a person and their children
+  """
+  def removePersonAndChildren(self,person):
+      if person in self.adjList:
+        children = self.adjList[person]
+        self.__removePerson(person)
+        for child in children:
+          self.removeParentAndChildren(child)
+   
+  """
+    Private Method that does the printing work
+  """
+  def __printTreeHelperFunction(self,person,spaces):
     if person is not None:
       print spaces + str(person)
       children = self.adjList[person]
       for child in children:
-        self.printTreeHelperFunction(child,spaces + '\t')
+        self.__printTreeHelperFunction(child,spaces + '\t')
 
-
+  """
+    Public method for printing the tree
+  """
   def printTree(self):
-    self.printTreeHelperFunction(self.rootParent,'')
+    self.__printTreeHelperFunction(self.rootParent,'')
 
+  """
+    Returns a string representation of the family tree
+  """
   def __str__(self):
    objStr=''
    for key,value in self.adjList.iteritems():
@@ -82,7 +111,8 @@ class FamilyTree:
          objStr=objStr+ str(person)+", "
      objStr = objStr + "]\n"
    return objStr
- 
+  
+
 if __name__ == "__main__":
 
   ftree = FamilyTree() 
@@ -110,5 +140,4 @@ if __name__ == "__main__":
   ftree.connectPersons(Rebecca,Thomas)
   ftree.connectPersons(Rebecca,Frank)
   ftree.setRootParent(Randall)
-
   ftree.printTree()
