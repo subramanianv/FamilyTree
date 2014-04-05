@@ -8,7 +8,6 @@ class FamilyTree:
 
   """
     Given a person, this method returns the parent, if its a root of the familyTree returns None
-
   """
   def findParent(self,person):
     for parent, children in self.adjList.iteritems():
@@ -98,7 +97,10 @@ class FamilyTree:
     Public method for printing the tree
   """
   def printTree(self):
-    self.__printTreeHelperFunction(self.rootParent,'')
+    if self.rootParent is not None:
+      self.__printTreeHelperFunction(self.rootParent,'')
+    else:
+      print "Please set the rootParent using setRootParent method"
 
   """
     Returns a string representation of the family tree
