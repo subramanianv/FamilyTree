@@ -32,9 +32,12 @@ class FamilyTree:
     Adds a person to a family Tree
   """
   def addPerson(self,person):
-   if person not in self.adjList:
+    if person is None:
+      print "Person is None"
+      return
+    if person not in self.adjList:
       self.adjList[person] = []
-   else:
+    else:
      print str(person)+ " already present"
  
   """
