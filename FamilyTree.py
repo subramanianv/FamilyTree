@@ -119,8 +119,10 @@ class FamilyTree:
     Serialize the family and store it in  a file using pickle module
   """
   def serialize(self,filename):
-    pickle.dump(self, open(filename, "wb" ) )
-    
+    if filename is not None and len(filename) > 0: 
+      pickle.dump(self, open(filename, "wb" ) )
+    else:
+        print "Error serializing the object"
   
 
 if __name__ == "__main__":
