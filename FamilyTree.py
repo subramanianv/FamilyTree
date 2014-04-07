@@ -114,6 +114,13 @@ class FamilyTree:
          objStr=objStr+ str(person)+", "
      objStr = objStr + "]\n"
    return objStr
+   
+  """
+    Serialize the family and store it in  a file using pickle module
+  """
+  def serialize(self,filename):
+    pickle.dump(self, open(filename, "wb" ) )
+    
   
 
 if __name__ == "__main__":
@@ -144,3 +151,4 @@ if __name__ == "__main__":
   ftree.connectPersons(Rebecca,Frank)
   ftree.setRootParent(Randall)
   ftree.printTree()
+  ftree.serialize("family.p")
