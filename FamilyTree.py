@@ -22,25 +22,21 @@ class FamilyTree:
     Returns the grandParent of the person or None if the grandParent is not present
   """
   def getGrandParentNode(self,person):
-    if person in self.adjList:
-      parent = self.findParent(person)
-      if parent is not None:
-        grandParent = self.findParent(parent)
-        return grandParent 
-      else:
-        return None
+    parent = self.findParent(person)
+    grandParent = self.findParent(parent)
+    return grandParent
 
   """
     Adds a person to a family Tree
   """
   def addPerson(self,person):
     if person is None:
-      print "Person is None"
+      print "Person cannot be None"
       return
     if person not in self.adjList:
       self.adjList[person] = []
     else:
-     print str(person)+ " already present"
+     print str(person) + " already present"
  
   """
     Sets a person as a root of the familyTree
@@ -50,7 +46,7 @@ class FamilyTree:
       self.rootParent = person
 
   """
-    Connects two persons. If the second person is connected to another parent, removes the connection and connects with a first person
+    Connects two persons. If the second person is connected to another parent, removes the connection and connects with the first person
   """
   def connectPersons(self,personA,personB):
     if personA == personB:
