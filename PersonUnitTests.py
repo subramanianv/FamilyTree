@@ -34,10 +34,10 @@ class PersonUnitTest(PersonUnitTestBaseClass):
     assert len(self.person.lastName) > 0,"Length of the string must be greater than 0" 
 
   def testHashFunction(self):
-    assert self.person.__hash__() == hash((self.person.firstName,self.person.lastName))
+    assert self.person.__hash__() == hash((self.person.firstName,self.person.lastName)),"Hash function is wrong"
 
   def testStringFunction(self):
-    assert self.person.__str__() == self.person.firstName + " " + self.person.lastName
+    assert self.person.__str__() == self.person.firstName + " " + self.person.lastName,"str is wrong"
 
 if __name__ == "__main__":
   unittest.main() 

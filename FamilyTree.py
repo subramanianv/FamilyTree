@@ -4,12 +4,14 @@ import pickle
 class FamilyTree:
   def __init__(self):
     self.adjList = dict()
-    self.rootParent = None
+    
 
   """
     Given a person, this method returns the parent, if its a root of the familyTree returns None
   """
   def findParent(self,person):
+    if person is None:
+      return None
     for parent, children in self.adjList.iteritems():
       for child in children:
         if child == person:
@@ -84,7 +86,7 @@ class FamilyTree:
         children = self.adjList[person]
         self.__removePerson(person)
         for child in children:
-          self.removeParentAndChildren(child)
+          self.removePersonAndChildren(child)
    
   """
     Private Method that does the printing work
@@ -100,7 +102,7 @@ class FamilyTree:
     Public method for printing the tree
   """
   def printTree(self):
-    if self.rootParent is not None:
+    if hasattr(self,"rootParent") is True:
       self.__printTreeHelperFunction(self.rootParent,'')
     else:
       print "Please set the rootParent using setRootParent method"
